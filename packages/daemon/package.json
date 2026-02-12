@@ -1,0 +1,21 @@
+{
+  "name": "@claude-watch/daemon",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./dist/server.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "node --watch dist/server.js",
+    "start": "node dist/server.js"
+  },
+  "dependencies": {
+    "fastify": "^5.2.0",
+    "@fastify/cors": "^11.0.0",
+    "nanoid": "^5.0.9",
+    "@claude-watch/shared": "*"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0",
+    "@types/node": "^22.0.0"
+  }
+}

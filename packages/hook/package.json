@@ -1,0 +1,17 @@
+{
+  "name": "@claude-watch/hook",
+  "version": "0.1.0",
+  "type": "module",
+  "bin": {
+    "claude-remote-hook": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@claude-watch/shared": "*"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0"
+  }
+}

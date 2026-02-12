@@ -1,0 +1,16 @@
+{
+  "name": "Claude Watch",
+  "short_name": "ClaudeWatch",
+  "theme_color": "#1a1a2e",
+  "background_color": "#0f0f23",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
