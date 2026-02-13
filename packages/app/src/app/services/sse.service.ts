@@ -44,7 +44,7 @@ export class SseService implements OnDestroy {
     }
 
     const loc = window.location;
-    const base = loc.port === '4500' ? `${loc.protocol}//${loc.hostname}:3100` : loc.origin;
+    const base = loc.port === '4500' ? `${loc.protocol}//${loc.hostname}:3200` : loc.origin;
     const url = `${base}/sessions/events?token=${encodeURIComponent(token)}`;
     this.eventSource = new EventSource(url);
 

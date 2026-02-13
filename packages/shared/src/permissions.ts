@@ -25,12 +25,6 @@ export const ALWAYS_ALLOWED_TOOLS = new Set([
   "TaskGet",
   "TaskUpdate",
   "TaskList",
-  // File editing — CC handles permissions for these internally
-  "Edit",
-  "Write",
-  "NotebookEdit",
-  // Multi-file tools
-  "MultiEdit",
   // Agent tools
   "Skill",
   "TeamCreate",

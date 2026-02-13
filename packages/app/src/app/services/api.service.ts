@@ -11,7 +11,7 @@ export class ApiService {
     // In dev, Angular runs on a different port — point to daemon directly.
     const loc = window.location;
     if (loc.port === '4500') {
-      return `${loc.protocol}//${loc.hostname}:3100`;
+      return `${loc.protocol}//${loc.hostname}:3200`;
     }
     return loc.origin;
   }

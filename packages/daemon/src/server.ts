@@ -1,5 +1,9 @@
+import { fileURLToPath } from "node:url";
+import { join, dirname } from "node:path";
+import { existsSync } from "node:fs";
 import Fastify from "fastify";
 import cors from "@fastify/cors";
+import fastifyStatic from "@fastify/static";
 
 import { PendingStore } from "./services/pending-store.js";
 import { SessionManager } from "./services/session-manager.js";
@@ -10,7 +14,10 @@ import { registerSessionRoutes } from "./routes/sessions.js";
 import { registerRespondRoutes } from "./routes/respond.js";
 import { registerAuthRoutes } from "./routes/auth.js";
 
-const PORT = parseInt(process.env["CLAUDE_WATCH_PORT"] ?? "3100", 10);
+const PORT = parseInt(process.env["CLAUDE_WATCH_PORT"] ?? "3200", 10);
+const __dirname = dirname(fileURLToPath(import.meta.url));
+// In production: daemon/dist/server.js → ../../app/dist/browser
+const STATIC_ROOT = join(__dirname, "..", "..", "app", "dist", "browser");
 
 const app = Fastify({ logger: true });
 
@@ -31,8 +38,9 @@ await app.register(cors, {
 app.addHook("onRequest", async (request, reply) => {
   const url = request.url;
 
-  // Skip auth for internal hook calls (from the CLI hook) and pairing endpoint
-  if (url === "/hooks/pre-tool-use" || url === "/auth/pair") {
+  // Only require auth for API routes
+  const isApiRoute = url.startsWith("/sessions") || url.startsWith("/hooks/");
+  if (!isApiRoute || url === "/hooks/pre-tool-use" || url === "/auth/pair") {
     return;
   }
 
@@ -60,6 +68,19 @@ registerSessionRoutes(app, sessionManager);
 registerRespondRoutes(app, pendingStore);
 registerAuthRoutes(app, authService);
 
+// Serve Angular PWA static files (production)
+if (existsSync(STATIC_ROOT)) {
+  await app.register(fastifyStatic, {
+    root: STATIC_ROOT,
+    wildcard: false,
+  });
+
+  // SPA fallback: serve index.html for any unmatched route
+  app.setNotFoundHandler((_request, reply) => {
+    return reply.sendFile("index.html");
+  });
+}
+
 // Startup
 async function start(): Promise<void> {
   await authService.init();
@@ -67,6 +88,9 @@ async function start(): Promise<void> {
   await app.listen({ port: PORT, host: "0.0.0.0" });
 
   console.log(`\n  claude-watch daemon listening on http://0.0.0.0:${PORT}`);
+  if (existsSync(STATIC_ROOT)) {
+    console.log(`  Serving PWA from ${STATIC_ROOT}`);
+  }
   authService.showPin();
 }
 

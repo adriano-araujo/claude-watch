@@ -1,0 +1,17 @@
+{
+  "/hooks/**": {
+    "target": "http://localhost:3200",
+    "secure": false,
+    "changeOrigin": true
+  },
+  "/sessions/**": {
+    "target": "http://localhost:3200",
+    "secure": false,
+    "changeOrigin": true
+  },
+  "/auth/**": {
+    "target": "http://localhost:3200",
+    "secure": false,
+    "changeOrigin": true
+  }
+}

@@ -36,7 +36,7 @@ O daemon exibe um PIN de 6 dígitos. Abra o app no celular e pareie com esse PIN
 ## Desenvolvimento
 
 ```bash
-# Daemon (porta 3100)
+# Daemon (porta 3200)
 node packages/daemon/dist/server.js
 
 # App Angular (porta 4500)

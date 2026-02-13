@@ -6,7 +6,7 @@ import { join } from "node:path";
 import type { HookInput, HookOutput, HookResponse, PermissionRules } from "@claude-watch/shared";
 import { ALWAYS_ALLOWED_TOOLS, checkPermission } from "@claude-watch/shared";
 
-const DAEMON_PORT = process.env.CLAUDE_WATCH_PORT || "3100";
+const DAEMON_PORT = process.env.CLAUDE_WATCH_PORT || "3200";
 const DAEMON_URL = `http://localhost:${DAEMON_PORT}`;
 const REMOTE_MODE_FILE = join(homedir(), ".claude-watch", "remote-mode");
 
